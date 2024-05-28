@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://gerrit.teamccp.com/rdk/rdkb/components/opensource/ccsp/halinterface/generic/ethvlanterm_json/ethlinkvlanterm_hal_schema.json",
+  "$id": "/ethvlanterm_json/ethlinkvlanterm_hal_schema.json",
   "title": "Ethernet Link and VLANTermination HAL Schema",
   "description": "Ethernet Link and VLANTermination HAL JSON Schema definitions. DO NOT modify the contents of this schema file. RDK community team make necessary changes and release",
 
