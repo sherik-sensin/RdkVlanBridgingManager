@@ -1,0 +1,82 @@
+diff --git a/source/TR-181/middle_layer_src/vlan_apis.c b/source/TR-181/middle_layer_src/vlan_apis.c
+index f4b25e7..5cb8281 100644
+--- a/source/TR-181/middle_layer_src/vlan_apis.c
++++ b/source/TR-181/middle_layer_src/vlan_apis.c
+@@ -54,7 +54,6 @@
+ #define SYSEVENT_WAN_IFACE_NAME "wan_ifname"
+ #define BUFLEN_64 64
+ 
+-#define PARAM_SIZE 10
+ #define PARAM_SIZE_32 32
+ #define PARAM_SIZE_64 64
+ 
+@@ -153,7 +152,7 @@ ANSC_STATUS Vlan_Init( void )
+     ANSC_STATUS  returnStatus = ANSC_STATUS_SUCCESS;
+ 
+ #if defined(VLAN_MANAGER_HAL_ENABLED)
+-    returnStatus != vlan_eth_hal_init();
++    returnStatus = vlan_eth_hal_init();
+     if (returnStatus != ANSC_STATUS_SUCCESS) {
+         CcspTraceError(("%s-%d: vlan_eth_hal_init failed\n", __FUNCTION__, __LINE__));
+     }
+@@ -330,8 +329,8 @@ void mapt_ivi_check() {
+     else {
+         if( fgets (line, 64, file)!=NULL ) {
+             if( strstr(line, "ivi")) {
+-                system("ivictl -q");
+-                system("rmmod -f /lib/modules/`uname -r`/extra/ivi.ko");
++                v_secure_system("ivictl -q");
++                v_secure_system("rmmod -f /lib/modules/`uname -r`/extra/ivi.ko");
+                 sleep(1);
+                 CcspTraceInfo(("%s - ivi.ko removed\n", __FUNCTION__));
+             }
+diff --git a/source/TR-181/middle_layer_src/vlan_eth_hal.c b/source/TR-181/middle_layer_src/vlan_eth_hal.c
+index 98137c1..c937cf7 100644
+--- a/source/TR-181/middle_layer_src/vlan_eth_hal.c
++++ b/source/TR-181/middle_layer_src/vlan_eth_hal.c
+@@ -83,7 +83,7 @@
+ #define CHECK(expr)                                                \
+     if (!(expr))                                                   \
+     {                                                              \
+-        CcspTraceError(("%s - %d Invalid parameter error \n!!!")); \
++        CcspTraceError(("%s - %d Invalid parameter error \n!!!", __FUNCTION__, __LINE__)); \
+         return RETURN_ERR;                                         \
+     }
+ 
+@@ -140,7 +140,6 @@ INT vlan_eth_hal_init()
+ /* vlan_eth_hal_createInterface() */
+ int vlan_eth_hal_createInterface(vlan_configuration_t *config)
+ {
+-    int rc = RETURN_OK;
+     json_object *jmsg = NULL;
+     json_object *jreply_msg = NULL;
+     json_bool status = FALSE;
+@@ -232,7 +231,6 @@ int vlan_eth_hal_createInterface(vlan_configuration_t *config)
+ /* vlan_eth_hal_setMarkings() */
+ int vlan_eth_hal_setMarkings(vlan_configuration_t *config)
+ {
+-    int rc = RETURN_OK;
+     json_object *jmsg = NULL;
+     json_object *jreply_msg = NULL;
+     json_bool status = FALSE;
+@@ -324,7 +322,6 @@ int vlan_eth_hal_setMarkings(vlan_configuration_t *config)
+ /* vlan_eth_hal_deleteInterface() */
+ int vlan_eth_hal_deleteInterface(char *ifname, int instanceNumber)
+ {
+-    int rc = RETURN_OK;
+     json_object *jmsg = NULL;
+     json_object *jreply_msg = NULL;
+     json_bool status = FALSE;
+diff --git a/source/TR-181/middle_layer_src/vlan_internal.c b/source/TR-181/middle_layer_src/vlan_internal.c
+index b04cebb..7579a27 100644
+--- a/source/TR-181/middle_layer_src/vlan_internal.c
++++ b/source/TR-181/middle_layer_src/vlan_internal.c
+@@ -196,7 +196,7 @@ static ANSC_STATUS VlanTerminationInitialize( ANSC_HANDLE hThisObject)
+         }
+ 
+         PDML_VLAN pVlan = (PDML_VLAN)AnscAllocateMemory(sizeof(DML_VLAN)* pMyObject->ulVlantrInstanceNumber);
+-        memset(pVlan, 0, sizeof(pVlan));
++        memset(pVlan, 0, sizeof(DML_VLAN));
+ 
+         for(nIndex = 0; nIndex < pMyObject->ulVlantrInstanceNumber; nIndex++)
+         {
