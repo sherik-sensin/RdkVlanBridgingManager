@@ -343,6 +343,7 @@ void mapt_ivi_check() {
 
 void * Vlan_Disable(void *Arg)
 {
+    ANSC_STATUS returnStatus = ANSC_STATUS_SUCCESS;
     int ret;
     vlan_link_status_e status;
 
