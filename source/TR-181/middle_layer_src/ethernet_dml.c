@@ -360,6 +360,7 @@ EthLink_GetParamStringValue
     )
 {
     PDML_ETHERNET              p_EthLink     = (PDML_ETHERNET   )hInsContext;
+    PUCHAR                     pString       = NULL;
 
     /* check the parameter name and return the corresponding value */
     if (strcmp(ParamName, "Alias") == 0)
@@ -578,6 +579,8 @@ EthLink_SetParamUlongValue
         ULONG                       uValue
     )
 {
+    PDML_ETHERNET             p_EthLink  = (PDML_ETHERNET   )hInsContext;
+
     /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
     return FALSE;
 }
@@ -621,7 +624,9 @@ EthLink_SetParamStringValue
         char*                       pString
     )
 {
+    PDATAMODEL_ETHERNET        pEthLink       = (PDATAMODEL_ETHERNET      )g_pBEManager->hEth;
     PDML_ETHERNET              p_EthLink      = (PDML_ETHERNET   )hInsContext;
+
 
     /* check the parameter name and set the corresponding value */
    
@@ -866,8 +871,6 @@ Marking_GetEntry
         *pInsNumber = (nIndex + 1);
         return (ANSC_HANDLE)(p_EthLink->pstDataModelMarking + nIndex);
     }
-
-    return ANSC_STATUS_SUCCESS;
 }
 
 /**********************************************************************
@@ -932,6 +935,7 @@ Marking_Synchronize
         ANSC_HANDLE                 hInsContext
     )
 {
+    PDML_ETHERNET                   p_EthLink     = (PDML_ETHERNET   )hInsContext;
     ANSC_STATUS  returnStatus = ANSC_STATUS_SUCCESS;
     return returnStatus;
 }

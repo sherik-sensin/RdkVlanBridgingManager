@@ -83,7 +83,7 @@
 #define CHECK(expr)                                                \
     if (!(expr))                                                   \
     {                                                              \
-        CcspTraceError(("%s - %d Invalid parameter error \n!!!", __FUNCTION__, __LINE__)); \
+        CcspTraceError(("%s - %d Invalid parameter error \n!!!")); \
         return RETURN_ERR;                                         \
     }
 
@@ -140,6 +140,7 @@ INT vlan_eth_hal_init()
 /* vlan_eth_hal_createInterface() */
 int vlan_eth_hal_createInterface(vlan_configuration_t *config)
 {
+    int rc = RETURN_OK;
     json_object *jmsg = NULL;
     json_object *jreply_msg = NULL;
     json_bool status = FALSE;
@@ -231,6 +232,7 @@ int vlan_eth_hal_createInterface(vlan_configuration_t *config)
 /* vlan_eth_hal_setMarkings() */
 int vlan_eth_hal_setMarkings(vlan_configuration_t *config)
 {
+    int rc = RETURN_OK;
     json_object *jmsg = NULL;
     json_object *jreply_msg = NULL;
     json_bool status = FALSE;
@@ -322,6 +324,7 @@ int vlan_eth_hal_setMarkings(vlan_configuration_t *config)
 /* vlan_eth_hal_deleteInterface() */
 int vlan_eth_hal_deleteInterface(char *ifname, int instanceNumber)
 {
+    int rc = RETURN_OK;
     json_object *jmsg = NULL;
     json_object *jreply_msg = NULL;
     json_bool status = FALSE;
