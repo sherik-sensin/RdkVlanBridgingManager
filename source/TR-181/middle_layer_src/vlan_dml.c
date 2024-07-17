@@ -413,6 +413,7 @@ Vlan_GetParamStringValue
     )
 {
     PDML_VLAN             p_Vlan      = (PDML_VLAN   )hInsContext;
+    PUCHAR                pString       = NULL;
 
     /* check the parameter name and return the corresponding value */
     if (strcmp(ParamName, "Alias") == 0)
@@ -671,6 +672,7 @@ Vlan_SetParamStringValue
         char*                       pString
     )
 {
+    PDATAMODEL_VLAN            pVLAN          = (PDATAMODEL_VLAN      )g_pBEManager->hVLAN;
     PDML_VLAN                  p_Vlan         = (PDML_VLAN   )hInsContext;
 
     /* check the parameter name and set the corresponding value */
@@ -807,13 +809,14 @@ Vlan_Rollback
     )
 {
     ANSC_STATUS                returnStatus  = ANSC_STATUS_SUCCESS;
+    PDATAMODEL_VLAN            pVLAN         = (PDATAMODEL_VLAN      )g_pBEManager->hVLAN;
     PDML_VLAN                  p_Vlan        = (PDML_VLAN   )hInsContext;
 
     if ( p_Vlan->Alias )
         AnscCopyString( p_Vlan->Alias, p_Vlan->Alias );
 
      DML_VLAN_INIT(p_Vlan);
-    _ansc_sprintf(p_Vlan->Name, "vlan%ld", p_Vlan->InstanceNumber);
+    _ansc_sprintf(p_Vlan->Name, "vlan%d", p_Vlan->InstanceNumber);
 
     return returnStatus;
 }

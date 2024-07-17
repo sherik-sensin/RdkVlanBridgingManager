@@ -37,7 +37,6 @@
 
 #include "vlan_mgr_apis.h"
 #include "ssp_global.h"
-#include "secure_wrapper.h"
 
 /* * Telemetry Markers */
 #define VLAN_MARKER_VLAN_IF_CREATE          "RDKB_VLAN_CREATE"
